@@ -10,11 +10,9 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Vertical">
             <TextBlock x:Name="status" HorizontalAlignment="Center" Margin="10,10"/>
-            <ScrollViewer>
-                <Canvas x:Name="mainCanvas" ManipulationMode="None" Margin="0,12,0,0" MinHeight="800">
-                    <Border x:Name="manipulateMe" Background="LightGray" Height="200" Width="200"  ManipulationMode="All" Margin="100"/>
-                </Canvas>
-            </ScrollViewer>
+            <Canvas x:Name="mainCanvas" ManipulationMode="None" Margin="0,12,0,0" MinHeight="800">
+                <Image x:Name="manipulateMe"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+            </Canvas>
         </StackPanel>
     </Grid>
 </Page>

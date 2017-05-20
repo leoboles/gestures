@@ -179,8 +179,8 @@ namespace gestures
         // that a manipulation is in progress
         void OnManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
-            Border b = element as Border;
-            b.Background = new SolidColorBrush(Windows.UI.Colors.DeepSkyBlue);
+            //Border b = element as Border;
+            //b.Background = new SolidColorBrush(Windows.UI.Colors.DeepSkyBlue);
         }
 
         // Process the change resulting from a manipulation
@@ -213,15 +213,15 @@ namespace gestures
         // the object to reflect that inertia has taken over
         void OnManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
-            Border b = element as Border;
-            b.Background = new SolidColorBrush(Windows.UI.Colors.RoyalBlue);
+            //Border b = element as Border;
+            //b.Background = new SolidColorBrush(Windows.UI.Colors.RoyalBlue);
         }
 
         // When a manipulation has finished, reset the color of the object
         void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            Border b = element as Border;
-            b.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
+            //Border b = element as Border;
+            //b.Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
 
             numPointers = 0;
             //statusText.Text = "Move/Rotate";
