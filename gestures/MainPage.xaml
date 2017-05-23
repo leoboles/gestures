@@ -8,11 +8,29 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0">
+            <TextBlock x:Name="ObjectName" HorizontalAlignment="Center" Margin="10,10" Visibility="Collapsed"/>
             <TextBlock x:Name="status" HorizontalAlignment="Center" Margin="10,10"/>
-            <Canvas x:Name="mainCanvas" ManipulationMode="None" Margin="0,12,0,0" MinHeight="800">
-                <Image x:Name="manipulateMe"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
-            </Canvas>
+            <TextBlock x:Name="statusScroll" HorizontalAlignment="Center" Margin="10,10"/>
         </StackPanel>
+        <Canvas x:Name="mainCanvas" ManipulationMode="None" Margin="0,12,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        </Canvas>
+        <ScrollViewer x:Name="manipulateMeScroll" Grid.Row="1" HorizontalScrollMode="Disabled" VerticalScrollMode="Disabled" ManipulationMode="All">
+            <StackPanel x:Name="ContentPanel">
+                <Image x:Name="manipulateMeImage1"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage2"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage3"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage4"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage5"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage6"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Image x:Name="manipulateMeImage7"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </Page>
