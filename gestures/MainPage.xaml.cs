@@ -41,7 +41,9 @@ namespace gestures
 
             // Create a ManipulationInputProcessor which will listen for events on the
             // rectangle, process them, and update the rectangle's position, size, and rotation
-            manipulationProcessor = new ManipulationInputProcessor(new GestureRecognizer(), scrollRecognizer, manipulateMeImage1, mainCanvas, status, ObjectName);
+            manipulationProcessor = new ManipulationInputProcessor(new GestureRecognizer(), scrollRecognizer, gridImage1, mainCanvas, status, ObjectName);
+            manipulationProcessor.GridHandler = decorationImage1;
+            manipulationProcessor = new ManipulationInputProcessor(new GestureRecognizer(), scrollRecognizer, resize1, mainCanvas, status, ObjectName, gridImage1 );
             manipulationProcessor.UseInertia(true);
             manipulationProcessor = new ManipulationInputProcessor(new GestureRecognizer(), scrollRecognizer, manipulateMeImage2, mainCanvas, status, ObjectName);
             manipulationProcessor.UseInertia(true);
@@ -64,7 +66,9 @@ namespace gestures
         public GestureRecognizer recognizer;
         public GestureRecognizer scrollRecognizer;
         UIElement element;
+        public FrameworkElement elementResize = null;
         UIElement reference;
+        public Grid GridHandler;
         TransformGroup cumulativeTransform;
         MatrixTransform previousTransform;
         CompositeTransform deltaTransform;
@@ -87,11 +91,12 @@ namespace gestures
             }
         }
 
-        public ManipulationInputProcessor(GestureRecognizer gestureRecognizer, GestureRecognizer scrollRecognizer, UIElement target, UIElement referenceFrame, TextBlock statusText, TextBlock objectNameText)
+        public ManipulationInputProcessor(GestureRecognizer gestureRecognizer, GestureRecognizer scrollRecognizer, UIElement target, UIElement referenceFrame, TextBlock statusText, TextBlock objectNameText, FrameworkElement _elementResize = null)
         {
             recognizer = gestureRecognizer;
             this.scrollRecognizer = scrollRecognizer;
             element = target;
+            elementResize = _elementResize;
             reference = referenceFrame;
             statusTextBlock = statusText;
             nameTextBlock = objectNameText;
@@ -134,7 +139,10 @@ namespace gestures
             cumulativeTransform.Children.Add(previousTransform);
             cumulativeTransform.Children.Add(deltaTransform);
 
-            element.RenderTransform = cumulativeTransform;
+            if (elementResize == null)
+                element.RenderTransform = cumulativeTransform;
+            else
+                elementResize.RenderTransform = cumulativeTransform;
         }
 
         // Return the default GestureSettings for this sample
@@ -221,18 +229,35 @@ namespace gestures
         // Process the change resulting from a manipulation
         void OnManipulationUpdated(object sender, ManipulationUpdatedEventArgs e)
         {
-            previousTransform.Matrix = cumulativeTransform.Value;
+            if (elementResize == null)
+            {
+                previousTransform.Matrix = cumulativeTransform.Value;
 
-            // Get the center point of the manipulation for rotation
-            Point center = new Point(e.Position.X, e.Position.Y);
-            deltaTransform.CenterX = center.X;
-            deltaTransform.CenterY = center.Y;
+                // Get the center point of the manipulation for rotation
+                Point center = new Point(e.Position.X, e.Position.Y);
+                deltaTransform.CenterX = center.X;
+                deltaTransform.CenterY = center.Y;
 
-            // Look at the Delta property of the ManipulationDeltaRoutedEventArgs to retrieve
-            // the rotation, X, and Y changes
-            deltaTransform.Rotation = e.Delta.Rotation;
-            deltaTransform.TranslateX = e.Delta.Translation.X;
-            deltaTransform.TranslateY = e.Delta.Translation.Y;
+                // Look at the Delta property of the ManipulationDeltaRoutedEventArgs to retrieve
+                // the rotation, X, and Y changes
+                deltaTransform.Rotation = e.Delta.Rotation;
+                deltaTransform.TranslateX = e.Delta.Translation.X;
+                deltaTransform.TranslateY = e.Delta.Translation.Y;
+            } else
+            {
+                previousTransform.Matrix = cumulativeTransform.Value;
+
+                // Get the center point of the manipulation for rotation
+                //Point center = new Point(e.Position.X, e.Position.Y);
+                //deltaTransform.CenterX = center.X;
+                //deltaTransform.CenterY = center.Y;
+
+                // Look at the Delta property of the ManipulationDeltaRoutedEventArgs to retrieve
+                // the rotation, X, and Y changes
+                
+                //deltaTransform.ScaleX = e.Delta.Translation.X/elementResize.Width;
+                deltaTransform.ScaleY = 1 + (e.Delta.Translation.Y / elementResize.ActualHeight);
+            }
 
             string text = "";
 
@@ -271,7 +296,16 @@ namespace gestures
         private void OnTapped(GestureRecognizer sender, TappedEventArgs args)
         {
             if (args.TapCount <= 1)
+            {
                 status = "Tapped";
+                if (GridHandler != null)
+                {
+                    if (GridHandler.Visibility == Visibility.Visible)
+                        GridHandler.Visibility = Visibility.Collapsed;
+                    else
+                        GridHandler.Visibility = Visibility.Visible;
+                }
+            }
             else
                 status = "Double Tapped";
         }

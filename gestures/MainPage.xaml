@@ -22,7 +22,15 @@
         </Canvas>
         <ScrollViewer x:Name="manipulateMeScroll" Grid.Row="1" HorizontalScrollMode="Disabled" VerticalScrollMode="Disabled" ManipulationMode="All">
             <StackPanel x:Name="ContentPanel">
-                <Image x:Name="manipulateMeImage1"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
+                <Grid Name="gridImage1" ManipulationMode="All" Margin="100" HorizontalAlignment="Center">
+                    <Image x:Name="manipulateMeImage1"  Source="assets\maxresdefault.jpg"  Height="200" Margin="15"/>
+                    <Grid x:Name="decorationImage1">
+                        <Ellipse HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="30" Stroke="Black" Fill="Yellow"/>
+                        <Ellipse HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="30" Stroke="Black" Fill="Yellow"/>
+                        <Ellipse HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="30" Width="30" Stroke="Black" Fill="Yellow"/>
+                        <Ellipse x:Name="resize1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="30" Stroke="Black" Fill="Yellow" ManipulationMode="All"/>
+                    </Grid>
+                </Grid>
                 <Image x:Name="manipulateMeImage2"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
                 <Image x:Name="manipulateMeImage3"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
                 <Image x:Name="manipulateMeImage4"  Source="assets\maxresdefault.jpg"  Height="200" ManipulationMode="All" Margin="100"/>
